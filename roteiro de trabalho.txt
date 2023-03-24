@@ -1,0 +1,103 @@
+ROTEIRO
+
+PRÉ-REQUISITOS
+- python instalado na máquina de desenvolvimento
+- pacote 'virtualenv' instalado
+- IDE VSCode instalada 
+
+CRIAR Folder do Projeto 
+1) Criar folder 'alura-space' 
+2) Abrir folder 'alura-space' no VSCode
+
+ISOLAR as dependências do projeto criando o Ambiente Virtual dentro do folder do projeto
+3) Criar ambiente virtual: terminal '>>>virtuaev .venv
+4) Ativar ambiente virtual: terminal '>>.venv\Scripts\activate
+    - Utilizando o módulo virtualenv, podemos separar as dependências de cada projeto.
+    - Então cada projeto possui suas próprias dependências, não precisando utilizar os módulos no escopo global.
+
+INSTALAR Django com pip
+5) Instalar framework Django: terminal '>>> pip instal django
+6) Verificar versão do django: termina '>>>django-admin --version
+
+VISUALIZAR as dendências do projeto e módulos
+7) Executar comando para ver os módulos que precisam ser instalados: terminal '>>> pip freeze'
+8) Boa prática: criar o arquivo que mostra todas as dependências do projeto e atualizar sempre que instalar algum pacote
+    - Executar o comando: terminal '>>> pip freeze > requirements.txt'
+
+CRIAR o projeto 
+9) Executar comando para visualizar todos o comando que o django pode executar
+    - Executar o comando: terminal '>>> django-admin help '
+10) Iniciar o projeto django 
+    - Executar o comando: terminal '>>> django-admin startproject setup .'
+    - O folder 'setup' que é criado nós vamos manter todos os códigos relacionados à configuração do projeto 
+11) Após executar o comando de criação do projeto, além do folder 'setup', também é gerado o arquivo python manage.python
+    - O manage.py é o responsável por executar a maioria dos  comandos que utilizaremos no desenv da aplicação django
+    - Também o manage.py é responsável por subir o servidor da aplicação
+12) Boa prática: conferir a versão do interpretador do django
+    - Ctrl + Shift + P 
+    - Escrever no campo 'Select Interpreter 
+12+1) Utilizar a mesma versão do python que a da '.venv' (o VSCode já indica a versão recomendada)
+
+SUBIR o servidor da aplicação pela 1ª vez
+14) Executar o comando o seguinte comando: terminal '>>> python manage.py runserver ' e o servidor de desenv será carregado
+15) Ir no navegador e digitar a url 'http://127.0.0.1:8000/ ' ou clicar no endereço
+    - a página padrão aparecendo no navegador mostra que a configuração de ambiente até esse ponto indica que tudo está ok
+
+AJUSTAR configurações de data, horário e linguagem
+16) Abrir o arquivo de settings: terminal '>>> setup > setting.py
+17) Alterar a configuração em # Internationalization
+
+    LANGUAGE_CODE = 'pt-br'
+
+    TIME_ZONE = 'America/SP'
+
+TRABALHANDO com VARIÁVEIS de AMBIENTE 
+18) Uma vez configurado o projeto precisamos começar a versionar o projeto usando o Git e GitHub. 
+    - Por uma questão de segurança não podemos enviar o código inteiro
+    - Temos que então começar a preparar o projeto para separar o que não podemos enviar para o GitHub
+19) Exemplo: Todo o projeto tem uma chave secreta que não deve estar acessível no GitHub   
+    - No arquivo '> setup > settings.py ' temos uma variável SECRET_KEY declarada
+21) Vamos precisar criar algumas variáveis de ambientes. 
+    - Com elas, conseguiremos evitar que a Secret Key e outras dados confidenciais sejam enviados.
+22) O python utiliza-se do pacote dotenv para gerenciar as variáveis de ambiente
+    - Essa ferramenta armazena a configuração dessas variáveis em um ambiente separado do código da aplicação
+23) Instalar o pacote 'dotenv': terminal '>>> pip install python-dotenv '
+24) Como foi instalado um novo módulo deve-se atualizar o arquivo requirements.txt
+    - Executar o comando: terminal '>>> pip freeze > requirements.txt
+25) Criar um novo arquivo no folder raiz '> alura-space > .env '
+    - Inserir SECRET_KEY = a chave secreta do projeto em as aspas
+26) Alterar arquivo '> setup > settings.py '
+    from pathlib import Path, os
+    from dotenv import load_dotenv
+
+    load_dotenv()
+
+    SECRET_KEY = str(os.getenv('SECRET_KEY'))
+
+27) O arquivo '> alura-space > .env ' não será enviado para o GitHub
+
+INICIANDO com o GitHub 
+28) Acessar conta do GitHub
+29) Criar um novo repositório: 'alura-space'
+    - https://github.com/JMartins-Sanmartin/alura-space.git (endereço para usar o repositório é criado)
+30) Criar no folder raiz o arquivo: template '>>> alura-space > .gitignore '
+    - gitignore é um arquivo de texto que diz ao Git quais arquivos ou pastas não queremos enviar para o repositório
+31) Parametrizar o arquivo '>>> alura-space > .gitignore '
+    - como é uma rotina para os desenvolvedores esse procedimento, acessar o site 'gitignore.io no browser
+    - informar a linguagem 'django' no campo de digitação
+    - copiar o conteúdo gerado (Ctrl + C) e no arquivo '>>> alura-space > .gitignore ' colar o conteúdo (Ctrl + v)
+32) Dar break no servidor digitando (Ctrl + C) no terminal 
+33) Levantar novamente o servidor: terminal '>>> python manage.py runserver ' e verifiar se tudo está ok 
+34) Dar break no servidor e verificar se existe alguma conexão com o repositório criado no item 29
+    - Executar o comando: terminal '>>> git remote -v ' ou '>>> git status '
+    - O comando git remote permite criar, ver e excluir conexões com outros repositórios.
+    - Neste caso não haverá nenhuma conexão (fatal: not a git repository (or any of the parent directories): .git)
+35) Executar o comando: terminal '>>> git init '
+    - Para começar um projeto que ainda não seja um repositório
+    - Criar um repositório vazio e que não tem controle de versão 
+36) Executar o comando: terminal '>>> git add . '
+    - Esse comando vai copiar tudo apenas que será enviado posteriormente ao repositório GitHub
+    - Estas alterações ocorrem apenas no nosso ambiente local, ou seja, não altera o repositório 
+    - Para incluir essas alterações no repositório é preciso dar um 'commit'
+    
+
